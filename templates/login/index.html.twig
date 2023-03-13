@@ -21,6 +21,9 @@
         </div>
     </div>
 
+    {%if is_granted('ROLE_USER') %}
+        <p>Bienvenue {{ last_username }}</p>
+    {% endif %}
 
     <div class="row m-3">
         <div class="col-4">

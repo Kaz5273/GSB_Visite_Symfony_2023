@@ -15,8 +15,14 @@ class InitController extends AbstractController
     #[Route('/init', name: 'app_init')]
     public function index(ManagerRegistry $doctrine, UserPasswordHasherInterface $passwordHasher): Response
     {
-        $newUser = new Visiteur(); //j'instancie un objet de la classe User
-        $newUser->setUsername('admin'); //je lui affecte la valeur 'elisabeth2' à son attribut Login
+        $newUser = new Visiteur();
+        $newUser->setUsername('admin');
+        $newUser->setNom('allard');
+        $newUser->setPrenom('kazuki');
+        $newUser->setMail('test@gmail.com');
+        $newUser->setTelephone('0651761323');
+        $newUser->setMatricule('MA109');
+
 
         $plaintextpassword = 'admin'; //on stocke le mot de passe en clair dans une variable
         $hashedpassword = $passwordHasher->hashPassword($newUser, $plaintextpassword); //on hache le mot de passe
