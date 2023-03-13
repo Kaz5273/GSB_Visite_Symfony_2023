@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\PraticienRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: PraticienRepository::class)]
@@ -36,17 +37,20 @@ class Praticien
     #[ORM\Column(length: 255)]
     private ?string $ville = null;
 
-
     #[ORM\OneToMany(mappedBy: 'praticiens', targetEntity: Visite::class)]
     private Collection $visites;
 
-    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'praticien')]
-    private Collection $users;
+    #[ORM\Column(type: Types::DECIMAL, precision: 5, scale: 2, nullable: true)]
+    private ?string $coeffNotoriete = null;
+
+    #[ORM\ManyToMany(targetEntity: Visiteur::class, mappedBy: 'praticien')]
+    private Collection $visiteurs;
 
     public function __construct()
     {
         $this->visites = new ArrayCollection();
         $this->users = new ArrayCollection();
+        $this->visiteurs = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -168,30 +172,44 @@ class Praticien
         return $this;
     }
 
+    public function getCoeffNotoriete(): ?string
+    {
+        return $this->coeffNotoriete;
+    }
+
+    public function setCoeffNotoriete(?string $coeffNotoriete): self
+    {
+        $this->coeffNotoriete = $coeffNotoriete;
+
+        return $this;
+    }
+
     /**
-     * @return Collection<int, User>
+     * @return Collection<int, Visiteur>
      */
-    public function getUsers(): Collection
+    public function getVisiteurs(): Collection
     {
-        return $this->users;
+        return $this->visiteurs;
     }
 
-    public function addUser(User $user): self
+    public function addVisiteur(Visiteur $visiteur): self
     {
-        if (!$this->users->contains($user)) {
-            $this->users->add($user);
-            $user->addPraticien($this);
+        if (!$this->visiteurs->contains($visiteur)) {
+            $this->visiteurs->add($visiteur);
+            $visiteur->addPraticien($this);
         }
 
         return $this;
     }
 
-    public function removeUser(User $user): self
+    public function removeVisiteur(Visiteur $visiteur): self
     {
-        if ($this->users->removeElement($user)) {
-            $user->removePraticien($this);
+        if ($this->visiteurs->removeElement($visiteur)) {
+            $visiteur->removePraticien($this);
         }
 
         return $this;
     }
+
+
 }

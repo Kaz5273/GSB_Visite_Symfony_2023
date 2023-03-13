@@ -24,7 +24,7 @@ class Visite
     private ?Praticien $praticiens = null;
 
     #[ORM\ManyToOne(inversedBy: 'visite')]
-    private ?User $user = null;
+    private ?Visiteur $visiteur = null;
 
     public function getId(): ?int
     {
@@ -67,15 +67,16 @@ class Visite
         return $this;
     }
 
-    public function getUser(): ?User
+    public function getVisiteur(): ?Visiteur
     {
-        return $this->user;
+        return $this->visiteur;
     }
 
-    public function setUser(?User $user): self
+    public function setVisiteur(?Visiteur $visiteur): self
     {
-        $this->user = $user;
+        $this->visiteur = $visiteur;
 
         return $this;
     }
+
 }
