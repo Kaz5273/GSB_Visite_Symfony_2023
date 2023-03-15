@@ -23,7 +23,7 @@ class Visite
     private ?string $commentaire = null;
 
     #[ORM\ManyToOne(inversedBy: 'visites')]
-    private ?Praticien $praticiens = null;
+    private ?Praticien $praticien = null;
 
     #[ORM\ManyToOne(inversedBy: 'visite')]
     private ?Visiteur $visiteur = null;
@@ -57,14 +57,14 @@ class Visite
         return $this;
     }
 
-    public function getPraticiens(): ?Praticien
+    public function getPraticien(): ?Praticien
     {
-        return $this->praticiens;
+        return $this->praticien;
     }
 
-    public function setPraticiens(?Praticien $praticiens): self
+    public function setPraticien(?Praticien $praticien): self
     {
-        $this->praticiens = $praticiens;
+        $this->praticien = $praticien;
 
         return $this;
     }

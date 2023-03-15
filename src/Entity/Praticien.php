@@ -39,7 +39,7 @@ class Praticien
     #[ORM\Column(length: 255)]
     private ?string $ville = null;
 
-    #[ORM\OneToMany(mappedBy: 'praticiens', targetEntity: Visite::class)]
+    #[ORM\OneToMany(mappedBy: 'praticien', targetEntity: Visite::class)]
     private Collection $visites;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 5, scale: 2, nullable: true)]
@@ -156,7 +156,7 @@ class Praticien
     {
         if (!$this->visites->contains($visite)) {
             $this->visites->add($visite);
-            $visite->setPraticiens($this);
+            $visite->setPraticien($this);
         }
 
         return $this;
@@ -166,8 +166,8 @@ class Praticien
     {
         if ($this->visites->removeElement($visite)) {
             // set the owning side to null (unless already changed)
-            if ($visite->getPraticiens() === $this) {
-                $visite->setPraticiens(null);
+            if ($visite->getPraticien() === $this) {
+                $visite->setPraticien(null);
             }
         }
 
